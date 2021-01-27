@@ -1,0 +1,26 @@
+baseURL = "http://moyrne.github.io/"
+languageCode = "zh-CN"
+title = "Moyrne Blog"
+theme = "anatole"
+[params]
+GithubID = "moyrne"
+title = "Moyrne"
+author = "Moyrne"
+description = "A growing rookie"
+profilePicture = "/images/profile.jpg"
+singleDateFormat = "Mon, 2006-01-02"
+indexDateFormat = "Mon, 2006-01-02"
+listDateFormat = "2006-01-02"
+
+[menu]
+[[menu.main]]
+name = "Home"
+identifier = "home"
+weight = 100
+url = "/"
+
+[[menu.main]]
+name = "Posts"
+weight = 200
+identifier = "posts"
+url = "/post/"
