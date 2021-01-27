@@ -2,11 +2,12 @@ baseURL = "http://moyrne.github.io/"
 languageCode = "zh-CN"
 title = "Moyrne Blog"
 theme = "anatole"
+
 [params]
 GithubID = "moyrne"
 title = "Moyrne"
 author = "Moyrne"
-description = "A growing rookie"
+description = "一个正在成长的菜鸟"
 profilePicture = "/images/profile.jpg"
 singleDateFormat = "Mon, 2006-01-02"
 indexDateFormat = "Mon, 2006-01-02"
@@ -14,13 +15,26 @@ listDateFormat = "2006-01-02"
 
 [menu]
 [[menu.main]]
-name = "Home"
+name = "主页"
 identifier = "home"
 weight = 100
 url = "/"
 
 [[menu.main]]
-name = "Posts"
+name = "Golang"
 weight = 200
-identifier = "posts"
-url = "/post/"
+identifier = "golang"
+url = "/golang/"
+
+
+[[menu.main]]
+name = "数据库"
+weight = 205
+identifier = "database"
+url = "/database/"
+
+[[menu.main]]
+name = "实用工具"
+weight = 210
+identifier = "tools"
+url = "/tools/"

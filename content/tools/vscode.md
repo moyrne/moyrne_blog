@@ -6,7 +6,7 @@ description: "Vscode 用户代码片段"
 ---
 # VSCode 用户代码片段
 # Golang
-~~~json
+~~~
 {
   "main": {
     "prefix": "main",
