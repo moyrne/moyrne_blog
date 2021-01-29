@@ -128,8 +128,8 @@ demo/splicing.BenchmarkStr.func4
 ## 原因分析
 
 - 使用 + 进行字符串拼接时，当 拼接 A 和 B 两个字符串时，需要申请另一个为A+B长度的空间C，每次都是如此。
-- 使用 strings.Builder 进行拼接时，内部实际上是使用的 []byte 存储，使用append操作，每次扩容是翻倍的。
-- (bytes.Builder 与 strings.Builder 的差异)
+- 使用 strings.Builder 进行拼接时，内部实际上是使用的 []byte 存储，使用append操作，在不需要扩容时会在当前slice后追加，且每次是翻倍扩容，能减少扩容（申请新内存片段和复制等操作）次数。
+- (bytes.Buffer 与 strings.Builder 的差异)
   - bytes.Buffer
     ~~~go
     func (b *Buffer) String() string {

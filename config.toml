@@ -38,3 +38,9 @@ name = "实用工具"
 weight = 210
 identifier = "tools"
 url = "/tools/"
+
+[[menu.main]]
+name = "关于我"
+weight = 215
+identifier = "about"
+url = "/about"
