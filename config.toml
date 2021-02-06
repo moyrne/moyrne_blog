@@ -1,4 +1,4 @@
-baseURL = "http://moyrne.github.io/"
+baseURL = "https://blog.moyrn.com/"
 languageCode = "zh-CN"
 title = "Moyrne Blog"
 theme = "anatole"
@@ -26,6 +26,11 @@ weight = 200
 identifier = "golang"
 url = "/golang/"
 
+[[menu.main]]
+name = "Kubernetes"
+weight = 203
+identifier = "kubernetes"
+url = "/kubernetes/"
 
 [[menu.main]]
 name = "数据库"
