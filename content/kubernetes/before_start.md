@@ -12,3 +12,8 @@ draft: false
   ~~~
   Mount NameSpace + mount("none","/tmp","tmpfs",0,"")
   ~~~
+
+
+
+
+还在学习的路上 。。。。。。
