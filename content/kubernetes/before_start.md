@@ -1,6 +1,6 @@
 ---
 title: "Kubernetes入门-基础"
-date: 2021-02-06T10:13C:46+08:00
+date: 2021-02-06T10:13:46+08:00
 draft: false
 ---
 
