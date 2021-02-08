@@ -212,3 +212,8 @@ kube-system   kube-proxy-hzh4k                 1/1     Running   1          22h 
 kube-system   kube-proxy-kktrf                 1/1     Running   1          22h   192.168.111.128   master   <none>           <none>
 kube-system   kube-scheduler-master            1/1     Running   1          22h   192.168.111.128   master   <none>           <none>
 ~~~
+
+- 为 Master 打上污点 禁止其它Pod在Master上启动
+~~~shell
+kubectl taint nodes node1 foo=bar:NoSchedule
+~~~
