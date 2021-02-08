@@ -13,7 +13,10 @@ draft: false
   Mount NameSpace + mount("none","/tmp","tmpfs",0,"")
   ~~~
 
-
+- 为 结点 打上污点 禁止其它Pod在结点上启动
+~~~shell
+kubectl taint nodes node1 foo=bar:NoSchedule
+~~~
 
 
 还在学习的路上 。。。。。。
