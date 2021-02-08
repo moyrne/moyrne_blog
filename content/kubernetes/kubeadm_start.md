@@ -215,5 +215,5 @@ kube-system   kube-scheduler-master            1/1     Running   1          22h 
 
 - 为 Master 打上污点 禁止其它Pod在Master上启动
 ~~~shell
-kubectl taint nodes node1 foo=bar:NoSchedule
+kubectl taint nodes master foo=bar:NoSchedule
 ~~~
