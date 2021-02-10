@@ -29,7 +29,7 @@ draft: false
   $ kubectl apply -f https://raw.githubusercontent.com/rook/rook/master/cluster/examples/kubernetes/ceph/cluster.yaml
   ~~~
 
-- docker 多阶段构建,减小体积（示例）
+- [20210211] docker 多阶段构建,减小体积（示例）
   ~~~dockerfile
   FROM golang:1.15
   
@@ -54,6 +54,36 @@ draft: false
   EXPOSE 8080
   
   ENTRYPOINT ["./beego"]
+  ~~~
+  
+- 设置 volume
+  ~~~yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: beego-demo
+  spec:
+    selector:
+      matchLabels:
+        app: beego-demo
+    replicas: 2
+    template:
+      metadata:
+        labels:
+          app: beego-demo
+      spec:
+        containers:
+        - name: beego
+          image: master:5000/beego
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/app/views"
+              name: beego-index
+        volumes:
+          - name: beego-index
+            hostPath:
+              path: "/var/data/beego/views"
   ~~~
 
   还在学习的路上 。。。。。。
