@@ -1,7 +1,7 @@
 ---
-title: "Pod_project"
+title: "Pod 对象"
 date: 2021-02-12T15:07:14+08:00
-draft: true
+draft: false
 ---
 
 ## Volume
@@ -53,5 +53,6 @@ livenessProbe:
 ~~~
 
 ## PodPreset
-    PodPreset 里定义的内容，只会在 Pod API 对象被创建之前追加在这个对象本身上，而不会影响任何 Pod 的控制器的定义。
-    比如，我们现在提交的是一个 nginx-deployment，那么这个 Deployment 对象本身是永远不会被 PodPreset 改变的，被修改的只是这个 Deployment 创建出来的所有 Pod。
+PodPreset 里定义的内容，只会在 Pod API 对象被创建之前追加在这个对象本身上，而不会影响任何 Pod 的控制器的定义。
+
+比如，我们现在提交的是一个 nginx-deployment，那么这个 Deployment 对象本身是永远不会被 PodPreset 改变的，被修改的只是这个 Deployment 创建出来的所有 Pod。
