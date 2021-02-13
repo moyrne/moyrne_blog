@@ -7,25 +7,25 @@ draft: false
 ## Volume
 - Projected Volume 将预先设置好的数据投射到容器中，
     - Secret
-    ~~~yaml
-    volumes: 
-    - name: mysql-cred 
-    projected: 
-      sources: 
-      - secret: 
-        name: user 
-      - secret: 
-        name: pass
-    ~~~
+~~~yaml
+volumes: 
+- name: mysql-cred 
+projected: 
+  sources: 
+  - secret: 
+    name: user 
+  - secret: 
+    name: pass
+~~~
     - ConfigMap
-    ~~~
-    ~~~
+~~~
+~~~
     - DownwardAPI
-    ~~~
-    ~~~
+~~~
+~~~
     - ServiceAccountToken
-    ~~~
-    ~~~
+~~~
+~~~
   
 ## restartPolicy livenessProbe
 1. 只要 Pod 的 restartPolicy 指定的策略允许重启异常的容器（比如：Always），那么这个 Pod 就会保持 Running 状态，并进行容器重启。否则，Pod 就会进入 Failed 状态 。 
