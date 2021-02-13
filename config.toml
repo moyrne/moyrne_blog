@@ -21,22 +21,16 @@ weight = 100
 url = "/"
 
 [[menu.main]]
-name = "Golang"
-weight = 200
-identifier = "golang"
-url = "/golang/"
-
-[[menu.main]]
 name = "Kubernetes"
-weight = 203
+weight = 200
 identifier = "kubernetes"
 url = "/kubernetes/"
 
 [[menu.main]]
-name = "数据库"
-weight = 205
-identifier = "database"
-url = "/database/"
+name = "Golang"
+weight = 203
+identifier = "golang"
+url = "/golang/"
 
 [[menu.main]]
 name = "实用工具"

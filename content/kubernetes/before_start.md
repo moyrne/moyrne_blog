@@ -85,5 +85,40 @@ draft: false
             hostPath:
               path: "/var/data/beego/views"
   ~~~
+  
+- nodeSelector 与 nodeAffinity
+  - nodeAffinity 支持更丰富的语义，如：operator
+  ~~~yaml
+  nodeSelector: 
+    name: <Node名字>
+  ~~~
+  ~~~yaml
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: metadata.name
+            operator: In
+            values:
+            - node-geektime
+  ~~~
+  
+- DaemonSet
+  - DaemonSet具有Toleration字段,用于忽略节点上的某些污点
+  ~~~yaml
+  # k8s项目中，当一个节点的网络插件尚未安装时，这个节点就会被自动加上名为node.kubernetes.io/network-unavailable的“污点”
+  # 例如master节点上也会有 node-role.kubernetes.io/master 这样的污点
+  template:
+    metadata:
+      labels:
+        name: network-plugin-agent
+    spec:
+      tolerations:
+      - key: node.kubernetes.io/network-unavailable
+        operator: Exists
+        effect: NoSchedule
+  ~~~
+  - DaemonSet 与 DeploymentSet 一样拥有滚动更新的能力，但与 DeploymentSet 通过 ReplicaSet 管理不同版本的区别是， DaemonSet 使用的是 ControllerRevision 对象（StatefulSet 同样如此）。
 
   还在学习的路上 。。。。。。
