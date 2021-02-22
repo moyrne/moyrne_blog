@@ -121,4 +121,50 @@ draft: false
   ~~~
   - DaemonSet 与 DeploymentSet 一样拥有滚动更新的能力，但与 DeploymentSet 通过 ReplicaSet 管理不同版本的区别是， DaemonSet 使用的是 ControllerRevision 对象（StatefulSet 同样如此）。
 
+- Job 与 CronJob
+  - 像 Deployment ，线上业务时才会使用，但实际上还有离线业务，此时就可以使用 Job。
+  - 定时任务则是 CronJob，定时任务可能存在上一次任务未完成，下一次任务已经开始执行的情况，可以通过 spec.concurrencyPolicy 进行配置。
+    1. concurrencyPolicy=Allow，这也是默认情况，这意味着这些 Job 可以同时存在； 
+    2. concurrencyPolicy=Forbid，这意味着不会创建新的 Pod，该创建周期被跳过；
+    3. concurrencyPolicy=Replace，这意味着新产生的 Job 会替换旧的、没有执行完的 Job。
+  ~~~yaml
+  # job
+  apiVersion: batch/v1
+  kind: Job
+  metadata:
+    name: pi
+  spec:
+    parallelism: 2
+    completions: 4
+    template:
+      spec:
+        containers:
+        - name: pi
+          image: resouer/ubuntu-bc
+          command: ["sh", "-c", "echo 'scale=5000; 4*a(1)' | bc -l "]
+        restartPolicy: Never
+    backoffLimit: 4
+  ~~~
+  ~~~yaml
+  # cronjob
+  apiVersion: batch/v1beta1
+  kind: CronJob
+  metadata:
+    name: hello
+  spec:
+    schedule: "*/1 * * * *"
+    jobTemplate:
+      spec:
+        template:
+          spec:
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - date; echo Hello from the Kubernetes cluster
+          restartPolicy: OnFailure
+  ~~~
+
   还在学习的路上 。。。。。。
