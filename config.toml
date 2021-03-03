@@ -46,6 +46,13 @@ code_copy_button = true # Turn on/off the code-copy-button for code-fields
 name = "github"
 url = "https://github.com/moyrne"
 
+[params.utteranc]
+enable = true
+repo = "moyrne/hugo-comment"
+issueTerm = "pathname"
+theme = "github-light"
+
+
 [menu]
 [[menu.main]]
 name = "文章"
@@ -60,7 +67,6 @@ url = "/tags"
 [[menu.main]]
 name = "关于"
 weight = 500
-identifier = "about"
 url = "/about"
 
 # anatole
