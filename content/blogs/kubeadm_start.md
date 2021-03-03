@@ -170,14 +170,20 @@ flannel
 calico
 canel
 kube-router
+weave
 .......
 ~~~
-
+- flannel
 ~~~shell
 # 下载 至 本地
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 # 如果打不开也可以自行复制 https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml
 kubectl apply -f kube-flannel.yml
+~~~
+- weave
+~~~shell
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')" 
+kubeadm config print init-defaults
 ~~~
 
 - 查看当前 Pod 状态
