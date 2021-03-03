@@ -1,6 +1,7 @@
 ---
 title: "Nginx 反向代理"
 date: 2021-01-27T13:34:41+08:00
+tags: ["nginx"]
 draft: false
 ---
 

@@ -1,7 +1,7 @@
 baseURL = "https://blog.moyrn.com/"
 languageCode = "zh-CN"
 defaultContentLanguage = "zh"
-title = "Moyrne Blog"
+title = "Moyrne'Blog"
 theme = "hermit"
 
 # hermit
@@ -32,7 +32,7 @@ dateformNumTime = "2006-01-02 15:04 -0700"
 # description = ""
 # images = [""]
 themeColor = "#494f5c"
-homeSubtitle = "A minimal and fast theme for Hugo."
+homeSubtitle = "一个正在成长的菜鸟."
 footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
 # bgImg = ""  # Homepage background-image URL
 # Prefix of link to the git commit detail page. GitInfo must be enabled.
@@ -43,37 +43,25 @@ relatedPosts = false  # Add a related content section to all single posts page
 code_copy_button = true # Turn on/off the code-copy-button for code-fields
 
 [[params.social]]
-name = "twitter"
-url = "https://twitter.com/"
-
-[[params.social]]
-name = "instagram"
-url = "https://instagram.com/"
-
-[[params.social]]
 name = "github"
-url = "https://github.com/"
+url = "https://github.com/moyrne"
 
 [menu]
 [[menu.main]]
-name = "主页"
-weight = 100
-url = "/"
-
-[[menu.main]]
-name = "Kubernetes"
+name = "文章"
 weight = 200
-url = "/kubernetes/"
+url = "/blogs/"
 
 [[menu.main]]
-name = "Golang"
-weight = 203
-url = "/golang/"
+name = "标签"
+weight = 350
+url = "/tags"
 
 [[menu.main]]
-name = "实用工具"
-weight = 210
-url = "/tools/"
+name = "关于"
+weight = 500
+identifier = "about"
+url = "/about"
 
 # anatole
 #[params]

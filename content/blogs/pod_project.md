@@ -1,6 +1,7 @@
 ---
 title: "Pod 对象"
 date: 2021-02-12T15:07:14+08:00
+tags: ["kubernetes"]
 draft: false
 ---
 

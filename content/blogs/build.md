@@ -1,6 +1,7 @@
 ---
 title: "Golang 编译"
 date: 2021-01-27T12:04:51+08:00
+tags: ["golang","build"]
 draft: false
 ---
 

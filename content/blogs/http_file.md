@@ -1,6 +1,7 @@
 ---
 title: "Golang HTTP包传输文件"
 date: 2021-01-27T13:02:39+08:00
+tags: ["golang"]
 draft: false
 ---
 

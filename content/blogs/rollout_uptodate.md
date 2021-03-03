@@ -1,6 +1,7 @@
 ---
 title: "Deployment 水平扩容和滚动更新"
-date: 2021-02-13T22:38:54+08:00 
+date: 2021-02-13T22:38:54+08:00
+tags: ["kubernetes"]
 draft: false
 ---
 

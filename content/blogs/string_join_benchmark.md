@@ -1,6 +1,7 @@
 ---
 title: "字符串拼接性能测试"
-date: 2021-01-28T13:31:45+08:00 
+date: 2021-01-28T13:31:45+08:00
+tags: ["golang","benchmark"]
 draft: false
 ---
 

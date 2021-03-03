@@ -1,6 +1,7 @@
 ---
 title: "GORM 使用"
 date: 2021-01-27T11:53:34+08:00
+tags: ["golang"]
 draft: false
 ---
 

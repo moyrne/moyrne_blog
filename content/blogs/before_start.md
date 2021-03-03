@@ -1,6 +1,7 @@
 ---
 title: "Kubernetes入门-基础"
 date: 2021-02-06T10:13:46+08:00
+tags: ["kubernetes"]
 draft: false
 ---
 
@@ -38,7 +39,7 @@ draft: false
   
   WORKDIR /app
   
-  COPY . .
+  COPY kubernetes .
   
   RUN go build
   

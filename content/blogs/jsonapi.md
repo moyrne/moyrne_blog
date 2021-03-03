@@ -1,6 +1,7 @@
 ---
 title: "JSON:API 使用"
-date: 2021-02-25T11:32:24+08:00 
+date: 2021-02-25T11:32:24+08:00
+tags: ["jsonapi","golang"]
 draft: true
 ---
 

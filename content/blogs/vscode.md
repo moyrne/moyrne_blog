@@ -1,6 +1,7 @@
 ---
 title: "Vscode"
 date: 2021-01-27T10:01:06+08:00
+tags: ["vscode"]
 draft: false
 description: "Vscode 用户代码片段"
 ---

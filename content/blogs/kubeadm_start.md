@@ -1,6 +1,7 @@
 ---
 title: "Kubeadm 搭建K8s集群"
-date: 2021-02-07T13:56:54+08:00 
+date: 2021-02-07T13:56:54+08:00
+tags: ["kubernetes"]
 draft: false
 ---
 
