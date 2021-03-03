@@ -50,7 +50,7 @@ url = "https://github.com/moyrne"
 enable = true
 repo = "moyrne/hugo-comment"
 issueTerm = "pathname"
-theme = "github-light"
+theme = "photon-dark"
 
 
 [menu]
