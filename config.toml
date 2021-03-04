@@ -46,10 +46,18 @@ code_copy_button = true # Turn on/off the code-copy-button for code-fields
 name = "github"
 url = "https://github.com/moyrne"
 
+[params.utteranc]
+enable = true
+repo = "moyrne/hugo-comment"    # 存储评论的Repo，格式为 owner/repo
+issueTerm = "pathname"           # 表示你选择以那种方式让github issue的评论和你的文章关联可以选择默认的pathname。
+theme = "github-dark-orange"        # 样式主题
+
 [menu]
 [[menu.main]]
 name = "文章"
 weight = 200
+disable_comments = true
+
 url = "/blogs/"
 
 [[menu.main]]
