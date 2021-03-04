@@ -56,8 +56,6 @@ theme = "github-dark-orange"        # 样式主题
 [[menu.main]]
 name = "文章"
 weight = 200
-disable_comments = true
-
 url = "/blogs/"
 
 [[menu.main]]
