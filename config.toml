@@ -32,7 +32,7 @@ dateformNumTime = "2006-01-02 15:04 -0700"
 # description = ""
 # images = [""]
 themeColor = "#494f5c"
-homeSubtitle = "一个正在成长的菜鸟."
+homeSubtitle = "一只正在成长的菜鸟."
 footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
 # bgImg = ""  # Homepage background-image URL
 # Prefix of link to the git commit detail page. GitInfo must be enabled.
@@ -48,10 +48,9 @@ url = "https://github.com/moyrne"
 
 [params.utteranc]
 enable = true
-repo = "moyrne/hugo-comment"
-issueTerm = "pathname"
-theme = "photon-dark"
-
+repo = "moyrne/hugo-comment"    # 存储评论的Repo，格式为 owner/repo
+issueTerm = "title"           # 表示你选择以那种方式让github issue的评论和你的文章关联可以选择默认的pathname。
+theme = "github-dark-orange"        # 样式主题
 
 [menu]
 [[menu.main]]
