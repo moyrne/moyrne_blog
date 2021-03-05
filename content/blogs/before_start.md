@@ -104,7 +104,14 @@ draft: false
             values:
             - node-geektime
   ~~~
-  
+
+
+- xtrabackup 无法下载
+  ~~~shell
+  docker pull ist0ne/xtrabackup
+  docker tag ist0ne/xtrabackup:latest gcr.io/google-samples/xtrabackup:1.0
+  ~~~
+
 - DaemonSet
   - DaemonSet具有Toleration字段,用于忽略节点上的某些污点
   ~~~yaml
@@ -167,5 +174,7 @@ draft: false
             - date; echo Hello from the Kubernetes cluster
           restartPolicy: OnFailure
   ~~~
+  
+
 
   还在学习的路上 。。。。。。
