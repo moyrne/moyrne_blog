@@ -32,7 +32,7 @@ dateformNumTime = "2006-01-02 15:04 -0700"
 # description = ""
 # images = [""]
 themeColor = "#494f5c"
-homeSubtitle = "一个正在成长的菜鸟."
+homeSubtitle = "一只正在成长的菜鸟."
 footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
 # bgImg = ""  # Homepage background-image URL
 # Prefix of link to the git commit detail page. GitInfo must be enabled.
@@ -66,7 +66,6 @@ url = "/tags"
 [[menu.main]]
 name = "关于"
 weight = 500
-identifier = "about"
 url = "/about"
 
 # anatole
