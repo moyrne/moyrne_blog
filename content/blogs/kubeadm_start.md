@@ -29,6 +29,20 @@ vim /etc/selinux/config
 SELINUX=disabled
 ~~~
 
+- [注意] 开启 IP 路由转发和 NAT
+~~~shell
+# https://ccie.lol/knowledge-base/linux-centos-route-forwarding/
+# 不开启会导致 Pod 无法链接外网以及 Pod 间无法通信的问题.
+[root@host ~]# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+[root@host ~]# sysctl -p
+[root@host ~]# sysctl -a | grep "ip_forward"
+net.ipv4.ip_forward = 1
+# 开启NAT
+[root@host ~]# iptables -P FORWARD ACCEPT    # 缺省允许 IP 转发
+# 利用 iptables 实现 NAT MASQUERADE 共享上网，此处 eth0 需要是能够访问外部网络的网卡接口
+[root@host ~]# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+~~~
+
 - 修改 k8s.conf
 
 ~~~shell
@@ -163,19 +177,6 @@ sudo chown $(id -u):$(id -g) ~/.kube/config
 kubeadm reset
 ~~~
 - 安装Pod Network
-
-~~~shell
-# https://ccie.lol/knowledge-base/linux-centos-route-forwarding/
-# 注意事项 开启 IP 路由转发和 NAT
-[root@host ~]# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-[root@host ~]# sysctl -p
-[root@host ~]# sysctl -a | grep "ip_forward"
-net.ipv4.ip_forward = 1
-# 开启NAT
-[root@host ~]# iptables -P FORWARD ACCEPT    # 缺省允许 IP 转发
-# 利用 iptables 实现 NAT MASQUERADE 共享上网，此处 eth0 需要是能够访问外部网络的网卡接口
-[root@host ~]# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-~~~
 
 ~~~text
 # 比较知名的网络解决方案:
