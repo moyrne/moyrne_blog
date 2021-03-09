@@ -1,0 +1,254 @@
+---
+title: "手动构建 OMNI-USDT 请求"
+date: 2019-08-10T14:01:07+08:00
+tags: ["golang","比特币","USDT"]
+draft: false
+---
+
+## 手动构建 omni usdt 划转
+- [2021-03-09] 从有道云笔记搬运至 `github pages`
+- 在实习期间写的，程序中有打印的这类问题，请忽略。（当时debug用的）
+~~~go
+package btc
+
+import (
+	"bytes"
+	"encoding/hex"
+	"errors"
+	"fmt"
+	"github.com/astaxie/beego"
+	"github.com/btcsuite/btcd/chaincfg"
+	"github.com/btcsuite/btcd/chaincfg/chainhash"
+	"github.com/btcsuite/btcd/txscript"
+	"github.com/btcsuite/btcd/wire"
+	"github.com/btcsuite/btcutil"
+	"github.com/ethereum/go-ethereum/common/math"
+	"log"
+	"math/big"
+	"$project/db"
+	"$project/models"
+	"$project/node/btc"
+	btc2 "$project/wallet/btc"
+)
+
+var hexLength = 16
+
+func calAmountUSDT(amount *big.Int) (amountHex string) {
+	amountHexBef := fmt.Sprintf("%x", amount)
+	amountHexLen := len(amountHexBef)
+
+	var amountHexBytes []byte
+	amountHexBytes = make([]byte, hexLength-amountHexLen)
+	for i := range amountHexBytes {
+		amountHexBytes[i] = '0'
+	}
+	for _, v := range amountHexBef {
+		amountHexBytes = append(amountHexBytes, byte(v))
+	}
+	amountHex = string(amountHexBytes)
+	return
+}
+
+// 发起usdt转账前先确认usdt余额
+func SendTransactionUSDT(from, to, amountUSDT, totalFee string) (txHash string, err error) {
+	var (
+		//Decimal            = "00000000"
+		//omni               = "6f6d6e69"
+		minBTCTrans        = "546"
+		omni               = "6f6d6e69"
+		transactionVarsion = "0000"     // 2 byte
+		transactionType    = "0000"     // 2 byte
+		currencyIdentifier = "0000001f" // 4 byte
+		//currencyIdentifier = "0000001f" // 4 byte
+		//amountUSDT                	 // 8 byte
+	)
+
+	var address models.Address
+	if err := db.DB.Where("address=? and chain_coin=?", from, "btc").
+		First(&address).Error; err != nil {
+		return "", err
+	}
+
+	amountUSDTToSend, _ := math.ParseBig256(amountUSDT)
+	amountUSDTHex := calAmountUSDT(amountUSDTToSend)
+
+	chainParams := &chaincfg.MainNetParams
+
+	log.Printf("total fee: %s", totalFee)
+	totalFeeBig, _ := math.ParseBig256(totalFee)
+
+	amountToSend, _ := math.ParseBig256(minBTCTrans)
+
+	feeRate, err := btc2.GetCurrentFeeRate()
+	log.Printf("current fee rate: %v", feeRate)
+	if err != nil {
+		beego.Error("GetCurrentFeeRate", err)
+		return "", err
+	}
+
+	fromWalletPublicAddress := from
+	log.Printf("from wallet public address: %s", fromWalletPublicAddress)
+
+	unspentTXOs, err := btc2.ListUnspentTXOs(fromWalletPublicAddress)
+	if err != nil {
+		beego.Error("ListUnspentTXOs", err)
+		return "", err
+	}
+	if unspentTXOs == nil {
+		beego.Error("marshalUTXOs unspentTXOs is nil")
+		return "", errors.New("marshalUTXOs unspentTXOs is nil")
+	}
+
+	//UTXOsAmount := big.NewInt(0)
+	//for _, unspentTXO := range unspentTXOs {
+	//	UTXOsAmount = new(big.Int).Add(UTXOsAmount, unspentTXO.Amount)
+	//}
+	// TODO:marshalUTXOs 存在问题，筛选后UTXOsAmount与unspentTXO不对应，
+	//  unspentTXO中金额过低，疑似选错了UTXO
+	unspentTXOs, UTXOsAmount, err := btc2.MarshalUTXOs(unspentTXOs, amountToSend, feeRate,3)
+	if err != nil {
+		beego.Error("marshalUTXOs", err)
+		return "", err
+	}
+
+	// prepare unspent transaction outputs with its privatekey.
+	log.Println("unspent UTXOs", unspentTXOs, UTXOsAmount)
+
+	tx := wire.NewMsgTx(wire.TxVersion)
+
+	var sourceUTXOs []*btc2.UTXO
+	// prepare tx ins
+	for idx := range unspentTXOs {
+		hashStr := unspentTXOs[idx].Hash
+
+		sourceUTXOHash, err := chainhash.NewHashFromStr(hashStr)
+		if err != nil {
+			beego.Error(err)
+			return "", err
+		}
+
+		sourceUTXOIndex := uint32(unspentTXOs[idx].TxIndex)
+		sourceUTXO := wire.NewOutPoint(sourceUTXOHash, sourceUTXOIndex)
+		sourceUTXOs = append(sourceUTXOs, unspentTXOs[idx])
+		sourceTxIn := wire.NewTxIn(sourceUTXO, nil, nil)
+		fmt.Println(sourceTxIn)
+		tx.AddTxIn(sourceTxIn)
+	}
+
+	// calculate the change
+	change := new(big.Int).Set(UTXOsAmount)
+	change = new(big.Int).Sub(change, amountToSend)
+	change = new(big.Int).Sub(change, totalFeeBig)
+	if change.Cmp(big.NewInt(0)) == -1 {
+		return "", err
+	}
+
+	destinationAddress := to
+
+	// create the tx outs
+	destAddress, err := btcutil.DecodeAddress(destinationAddress, chainParams)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	fmt.Println(destAddress.EncodeAddress(), destAddress.String())
+
+	destScript, err := txscript.PayToAddrScript(destAddress)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	// tx out to send btc to user
+	destOutput := wire.NewTxOut(amountToSend.Int64(), destScript)
+	tx.AddTxOut(destOutput)
+	//txscript.OP_RETURN
+	// usdt转账   OP_RETURN 备注
+	//usdtOut, err := txscript.NullDataScript([]byte("OP_RETURN " + omni + transactionVarsion + transactionType + currencyIdentifier + amountUSDTHex))
+
+	op_return ,err := hex.DecodeString(omni + transactionVarsion + transactionType + currencyIdentifier + amountUSDTHex)
+	if err != nil {
+		beego.Debug("SendTransactionUSDT DecodeString error",err)
+		return
+	}
+
+	usdtOut, err := txscript.NullDataScript(op_return)
+	if err != nil {
+		beego.Error("SendTransactionUSDT txscript.NullDataScript error", err)
+		return
+	}
+	//fmt.Println("usdtout:", hex.EncodeToString(usdtOut))
+	usdtOutput := wire.NewTxOut(int64(0), usdtOut)
+	tx.AddTxOut(usdtOutput)
+
+	// our change address
+	changeSendToAddress, err := btcutil.DecodeAddress(fromWalletPublicAddress, chainParams)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	changeSendToScript, err := txscript.PayToAddrScript(changeSendToAddress)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	// tx out to send change back to us
+	changeOutput := wire.NewTxOut(change.Int64(), changeSendToScript)
+	tx.AddTxOut(changeOutput)
+
+	privWif := address.PrivateKey
+
+	decodedWif, err := btcutil.DecodeWIF(privWif)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	addressPubKey, err := btcutil.NewAddressPubKey(decodedWif.PrivKey.PubKey().SerializeCompressed(), chainParams)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+	sourceAddress, err := btcutil.DecodeAddress(addressPubKey.EncodeAddress(), chainParams)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	fmt.Printf("Source Address: %s\n", sourceAddress)
+
+	sourcePkScript, err := txscript.PayToAddrScript(sourceAddress)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+
+	for i := range sourceUTXOs {
+		fmt.Println("sourceUTXOs[i]:", sourceUTXOs[i])
+		sigScript, err := txscript.SignatureScript(tx, i, sourcePkScript, txscript.SigHashAll, decodedWif.PrivKey, true)
+		if err != nil {
+			beego.Error(err)
+			return "", err
+		}
+		tx.TxIn[i].SignatureScript = sigScript
+	}
+	for _, tx := range tx.TxIn {
+		fmt.Println("TxIn[i]:", tx)
+	}
+
+	buf := bytes.NewBuffer(make([]byte, 0, tx.SerializeSize()))
+	_ = tx.Serialize(buf)
+	fmt.Printf("Redeem Tx: %v\n", hex.EncodeToString(buf.Bytes()))
+
+	txHash, err = btc.CastTransaction(tx)
+	if err != nil {
+		beego.Error(err)
+		return "", err
+	}
+	fmt.Printf("tx hash: %s\n", txHash)
+	return txHash, nil
+}
+~~~
