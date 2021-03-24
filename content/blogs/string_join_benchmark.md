@@ -81,6 +81,7 @@ BenchmarkStr/BuilderStr-100000-12       1000000000               0.00258 ns/op  
 BenchmarkStrOnly-12                     1000000000               0.500 ns/op           5 B/op          0 allocs/op
 PASS
 ok      demo/splicing   35.097s
+$ go tool pprof -http=:8080 mem.prof
 ~~~
 
 ## 内存消耗
