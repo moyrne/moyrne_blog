@@ -7,7 +7,7 @@ draft: false
 
 # MYSQL 悲观锁
 
-~~~
+~~~go
 tx := db.DB.Begin()
 if err := tx.Set("gorm:query_option", "FOR UPDATE").
 	Where("`xx` = ? and `xxx` = ?", xx, xxx).
@@ -42,7 +42,7 @@ gorm:"primary_key;AUTO_INCREMENT:false"
 
 
 ## 代码示例
-~~~~
+~~~~go
 package base
 
 import (

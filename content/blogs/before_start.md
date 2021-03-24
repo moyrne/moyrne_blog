@@ -8,7 +8,7 @@ draft: false
 - 网络设置
   ~~~shell
   # https://ccie.lol/knowledge-base/linux-centos-route-forwarding/
-  # 注意事项 开启 IP 路由转发和 NAT
+  # 注意事项 开启 IP 路由转发和 NAT, 未开启会导致 Pod 无法访问外网以及 Pod 间无法通信.
   [root@host ~]# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
   [root@host ~]# sysctl -p
   [root@host ~]# sysctl -a | grep "ip_forward"

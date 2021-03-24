@@ -67,7 +67,7 @@ func BenchmarkStr(b *testing.B) {
 
 ## 测试结果
 
-~~~
+~~~shell
 $ go test -bench=BenchmarkStr  -benchmem -memprofile=mem.prof -cpuprofile=cpu.prof
 goos: linux
 goarch: amd64
