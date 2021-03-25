@@ -56,7 +56,7 @@ theme = "github-dark-orange"        # 样式主题
 [[menu.main]]
 name = "文章"
 weight = 200
-url = "/blogs/"
+url = "/posts/*"
 
 [[menu.main]]
 name = "标签"
