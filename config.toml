@@ -56,12 +56,12 @@ theme = "github-dark-orange"        # 样式主题
 [[menu.main]]
 name = "文章"
 weight = 200
-url = "/posts/*"
+url = "posts/"
 
 [[menu.main]]
 name = "标签"
 weight = 350
-url = "/tags"
+url = "tags/"
 
 [[menu.main]]
 name = "关于"
