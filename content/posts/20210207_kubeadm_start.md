@@ -188,6 +188,29 @@ weave
 .......
 ~~~
 - flannel
+
+    - [*] flannel 如果需要跨主机修改配置信息
+        - host-gw
+        ~~~yaml
+        net-conf.json: |
+          {
+            "Network": "10.244.0.0/16",
+            "Backend": {
+              "Type": "host-gw"
+            }
+          }
+        ~~~
+        - vxlan 要打开直接路由转发方式
+        ~~~yaml
+        net-conf.json: |
+          {
+            "Network": "10.244.0.0/16",
+            "Backend": {
+              "Type": "vxlan",
+              "Directrouting": true
+            }
+          }
+        ~~~
 ~~~shell
 # 下载 至 本地
 wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
