@@ -9,6 +9,7 @@ tags: ["shell"]
 ~~~shell
 # 安装zsh
 sudo apt-get install zsh
+
 # 将zsh切换成默认shell
 chsh -s /bin/zsh
 
