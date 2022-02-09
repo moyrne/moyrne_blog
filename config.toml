@@ -42,6 +42,8 @@ justifyContent = false  # Set "text-align: justify" to `.content`.
 relatedPosts = false  # Add a related content section to all single posts page
 code_copy_button = true # Turn on/off the code-copy-button for code-fields
 
+#customCSS = ["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css", "css/styles.css"]
+
 [[params.social]]
 name = "github"
 url = "https://github.com/moyrne"
