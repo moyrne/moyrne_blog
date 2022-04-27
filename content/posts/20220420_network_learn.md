@@ -101,3 +101,10 @@ tags:
 ![sack-1](/images/sack_1.png)
 ![sack-2](/images/sack_2.png)
 ![sack-3](/images/sack_3.png)
+
+* Ack可以只确认一部分包（确认号是在中间位置）
+![ack-percent](/images/ack_percent.png)
+
+## DDos攻击
+* NTP 反射放大攻击
+* SSDP 反射型攻击
