@@ -1,12 +1,13 @@
 ---
-title: "Etcd 配置"
+title: "Etcd"
 date: 2022-05-21T20:18:41+08:00
 draft: false
 toc: false
 images:
-tags: ["shell"]
+tags: ["笔记","基础件","etcd"]
 ---
 
+# Etcd 配置
 1. 使用`apt`安装`etcd`
 ~~~
 sudo apt install etcd
@@ -75,3 +76,14 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 Alias=etcd2.service
 ~~~
+
+# Etcd 选举
+> 文档 https://www.cnblogs.com/xybaby/p/10124083.html
+> 
+> 演示动画 http://thesecretlivesofdata.com/raft/
+* 节点的三种状态
+    1. leader（集群中唯一，所有的写入都由leader受理，follower从leader同步数据）
+    2. candidate（follower接收leader心跳超时后，会转为candidate状态）
+    3. follower（只读节点）
+
+![raft-node-status](/images/raft_node_status.png)
