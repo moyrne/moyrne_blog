@@ -28,7 +28,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 vim ~/.zshrc
 # 修改文件内容
-plugins=(git autojump zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 # 保存,执行文件
 source ~/.zshrc
 ~~~
